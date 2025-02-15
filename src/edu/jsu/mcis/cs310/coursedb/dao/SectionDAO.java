@@ -43,7 +43,6 @@ public class SectionDAO {
                 }
                 // Convert result set into json string for output
                 result = DAOUtility.getResultSetAsJson(rs);
-                System.out.println(result);
             }
             
         }

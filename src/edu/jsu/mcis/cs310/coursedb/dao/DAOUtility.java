@@ -19,21 +19,22 @@ public class DAOUtility {
                 // INSERT YOUR CODE HERE
                 // get metadata
                 ResultSetMetaData meta = rs.getMetaData();
-                // move cursor to the first row in the result set
-                rs.next();
                 // get number of columns in result set
                 int numCols = meta.getColumnCount();
-                // loop through all values in the result set, column by column, and add them to a jsonObject
-                while(!rs.isAfterLast()){
+                // loop through all values in the result set (if the set is not empty), 
+                // column by column, and add them to a jsonObject
+                while(rs.next()){
                     JsonObject data = new JsonObject();
                     for(int i = 1; i <= numCols; i++){
                         // Add the column element into the JsonObject with the correct column name
                         String key = meta.getColumnName(i);
-                        data.put(key, rs.getString(i));
+                        String value = rs.getString(i);
+                        if(!rs.wasNull()){
+                            data.put(key, value);
+                        }
                     }
                     // add the jsonObject to records
                     records.add(data);
-                    rs.next();
                 }
 
             }
